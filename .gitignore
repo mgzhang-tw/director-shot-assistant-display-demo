@@ -1,0 +1,11 @@
+node_modules/
+.npm-cache/
+dist/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+implementation*.png
+design-comparison*.png
+glasses-*.png
