@@ -170,6 +170,54 @@ function parseTheEdgePlanSheet(workbook: XLSX.WorkBook, fileName: string): Parse
   };
 }
 
+function findGenericHeaderIndex(rows: unknown[][]) {
+  return rows.findIndex((row) => {
+    const cells = row.map(compact);
+    const hasShot = cells.some((cell) => cell === "鏡號" || cell === "shot" || cell === "shotno");
+    const hasDescription = cells.some((cell) => cell === "內容" || cell.includes("description") || cell.includes("畫面"));
+    const hasTimeOrScene = cells.some((cell) => cell.includes("預估時間") || cell === "場景" || cell.includes("location"));
+    return hasShot && hasDescription && hasTimeOrScene;
+  });
+}
+
+function parseGenericHeaderSheet(workbook: XLSX.WorkBook, fileName: string): ParseResult | null {
+  const sheetName = workbook.SheetNames[0];
+  const sheet = sheetName ? workbook.Sheets[sheetName] : null;
+  if (!sheetName || !sheet) return null;
+
+  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: false });
+  const headerIndex = findGenericHeaderIndex(matrix);
+  if (headerIndex < 0) return null;
+
+  const headers = (matrix[headerIndex] ?? []).map((header, index) => cleanText(header) || `__EMPTY_${index}`);
+  const { mapping, unmappedColumns } = mapHeaders(headers);
+  const bodyRows = matrix.slice(headerIndex + 1).map((row) => Object.fromEntries(headers.map((header, index) => [header, row[index] ?? ""])));
+  const shots = bodyRows
+    .filter((row) => {
+      const shotHeader = mapping.shotNumber;
+      return Boolean(shotHeader && isMeaningful(row[shotHeader]));
+    })
+    .map((row, index) => normalizeRow(row, mapping, headerIndex + index + 1))
+    .filter((shot) => {
+      const description = shot.description.replace("此鏡頭尚未填寫畫面內容", "").trim();
+      return Boolean(shot.shotNumber && (description || shot.sceneTitle || shot.estimatedTime));
+    });
+
+  if (!shots.length) return null;
+  return {
+    shots,
+    importMeta: {
+      fileName,
+      sheetName,
+      sheetCount: workbook.SheetNames.length,
+      totalRows: shots.length,
+      mappedFields: Object.keys(mapping),
+      unmappedColumns,
+      importedAt: new Date().toISOString(),
+    },
+  };
+}
+
 export async function parseShotFile(file: File): Promise<{ shots: Shot[]; importMeta: ImportMeta }> {
   const data = await file.arrayBuffer();
   const workbook = file.name.toLowerCase().endsWith(".csv")
@@ -177,6 +225,8 @@ export async function parseShotFile(file: File): Promise<{ shots: Shot[]; import
     : XLSX.read(data, { type: "array" });
   const theEdgePlan = parseTheEdgePlanSheet(workbook, file.name);
   if (theEdgePlan) return theEdgePlan;
+  const genericHeaderSheet = parseGenericHeaderSheet(workbook, file.name);
+  if (genericHeaderSheet) return genericHeaderSheet;
 
   const sheetName = workbook.SheetNames[0];
   if (!sheetName) throw new Error("檔案內沒有可讀取的工作表");
