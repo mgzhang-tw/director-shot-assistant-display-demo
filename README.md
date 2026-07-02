@@ -15,6 +15,8 @@ npm run dev
 
 ## Supabase 測試同步
 
+目前測試專案已接上 Supabase project `fyjvusodmuuecjcpsaly`，公開版使用 Supabase publishable key，不使用 service role key。
+
 1. 建立 Supabase project。
 2. 在 SQL Editor 執行 `supabase/setup.sql`。
 3. 複製 `.env.example` 為 `.env.local`，填入 Project URL 與 publishable／anon key（不可放 service role key）。
