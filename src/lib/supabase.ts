@@ -1,8 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import type { ProjectData } from "../types";
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined) || "https://fyjvusodmuuecjcpsaly.supabase.co";
+const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) || "sb_publishable__N6UNzDSCDnyu3I6_QIEYg_S-hnu81N";
 
 export const hasSupabaseConfig = Boolean(url && key);
 export const supabase = hasSupabaseConfig ? createClient(url!, key!, { auth: { persistSession: false } }) : null;
