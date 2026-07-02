@@ -1,4 +1,4 @@
-export type ShotStatus = "ready" | "shooting" | "done" | "retake" | "skip";
+export type ShotStatus = "ready" | "shooting" | "done" | "retake" | "skip" | "pickup" | "print";
 
 export type Shot = {
   id: string;

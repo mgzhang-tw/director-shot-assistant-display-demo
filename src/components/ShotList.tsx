@@ -1,7 +1,7 @@
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import type { Shot } from "../types";
 
-const status = { ready: "待拍", shooting: "拍攝中", done: "完成", retake: "重拍", skip: "跳過" };
+const status = { ready: "待拍", shooting: "拍攝中", done: "完成", retake: "重拍", skip: "跳過", pickup: "補拍", print: "正片" };
 export function ShotList({ shots, currentId, onSelect, onMove }: { shots: Shot[]; currentId: string; onSelect: (id: string) => void; onMove: (offset: number) => void }) {
   return <section className="panel shot-list-panel">
     <div className="panel-heading"><h2>拍攝序列</h2><span>{shots.length} 個鏡位</span></div>

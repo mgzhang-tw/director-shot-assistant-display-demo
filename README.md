@@ -22,7 +22,15 @@ npm run dev
 5. 在 `/control` 匯入表格後按「同步到眼鏡」。
 6. 眼鏡開啟 `/glasses?project=畫面上的代碼`。
 
-尚未設定 Supabase 時，可用 `/glasses?project=DEMO` 測試 600×600 眼鏡畫面與方向鍵操作。正式讓眼鏡使用時，網站必須部署在公開 HTTPS 網址。
+尚未設定 Supabase 時，可用 `?mode=glasses&project=DEMO` 測試 600×600 眼鏡畫面與方向鍵操作。正式讓眼鏡使用時，網站必須部署在公開 HTTPS 網址。
+
+### 眼鏡操作
+
+- 左／右：切換「分鏡、鏡頭、提示」資訊頁。
+- 上／下：切換上一鏡／下一鏡。
+- Neural Band Select／Enter 或網頁雙擊：開啟拍攝狀態選單。
+- 狀態選單內用上下選擇，Select／Enter 或雙擊確認。
+- 測試版狀態保存在眼鏡瀏覽器的 localStorage；啟用 Supabase 後才能跨裝置同步。
 
 ## 匯入 Excel／CSV
 

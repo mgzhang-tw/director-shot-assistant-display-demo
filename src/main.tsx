@@ -5,6 +5,7 @@ import { GlassesApp } from "./GlassesApp";
 import "./styles.css";
 import "./sync.css";
 import "./glasses-navigation.css";
+import "./status-menu.css";
 
 const isGlasses = window.location.pathname.startsWith("/glasses") || new URLSearchParams(window.location.search).get("mode") === "glasses";
 

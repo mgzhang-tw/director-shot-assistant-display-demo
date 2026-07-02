@@ -2,7 +2,7 @@ import { ChatCircle, Eye, User } from "@phosphor-icons/react";
 import type { Shot } from "../types";
 import { StoryboardPanel } from "./StoryboardPanel";
 import { StatusControls } from "./StatusControls";
-const labels = { ready: "準備中", shooting: "拍攝中", done: "完成", retake: "重拍", skip: "跳過" };
+const labels = { ready: "準備中", shooting: "拍攝中", done: "完成", retake: "重拍", skip: "跳過", pickup: "補拍", print: "正片" };
 export function ShotDetail({ shot, onStatus }: { shot: Shot; onStatus: (status: Shot["status"]) => void }) {
   return <main className="detail">
     <div className="shot-title"><div><span>場次／鏡位</span><h1><b>{shot.sceneNumber}-{shot.shotNumber}</b><em>Scene {shot.sceneNumber} / Shot {shot.shotNumber}</em></h1></div><strong className={`status-${shot.status}`}>{labels[shot.status]}</strong></div>
