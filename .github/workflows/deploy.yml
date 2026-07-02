@@ -12,7 +12,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      npm_config_cache: ${{ runner.temp }}/npm-cache
+      npm_config_cache: /tmp/npm-cache
     steps:
       - name: Checkout
         uses: actions/checkout@v4
