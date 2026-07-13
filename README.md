@@ -4,6 +4,15 @@
 
 本工具不會使用 Meta Ray-Ban Display 的攝影機、麥克風或錄音功能；也不模擬即時取景。
 
+## 目前正式工作流程
+
+未來新案子以「大表／分鏡圖 → 電腦檢查 → 眼鏡讀取」為標準流程。
+
+- SOP：[docs/director-shot-assistant-sop.md](docs/director-shot-assistant-sop.md)
+- 電腦檢查頁：`https://mgzhang-tw.github.io/director-shot-assistant-display-demo/?project=專案代碼`
+- 眼鏡頁：`https://mgzhang-tw.github.io/director-shot-assistant-display-demo/?mode=glasses&project=專案代碼`
+- 範例專案：`WANCAO24`
+
 ## 安裝與啟動
 
 ```bash
@@ -36,7 +45,7 @@ npm run dev
 
 ## 匯入 Excel／CSV
 
-點選左上「選擇拍攝大表或 Shot List」，支援 `.xlsx`、`.xls`、`.csv`。第一個 sheet 會被讀取，每一列轉成一顆鏡頭。介面會列出 sheet 數量、資料列數、成功對應欄位與未辨識欄位。
+點選左上「選擇拍攝大表或 Shot List」，支援 `.xlsx`、`.xls`、`.csv`。系統會嘗試尋找真正的拍攝計劃 sheet、偵測表頭列，並排除 DAY、轉場、休息、餐食與空白列。介面會列出 sheet 數量、資料列數、成功對應欄位與未辨識欄位。
 
 支援中英文常見欄名，例如：場次／Scene、鏡號／Shot、地點／Location、日夜／Time、內外景／INT/EXT、景別／Shot Size、運鏡／Camera Movement、畫面內容／Description、分鏡圖／Storyboard、台詞、演員提示、視覺提示、道具、角色、備註與預估時間。
 
@@ -57,4 +66,4 @@ Excel 內嵌圖片不在 MVP 範圍。
 
 ## 第一版限制與後續
 
-目前只讀第一個 sheet，不解析 Excel 內嵌圖片，不支援登入、雲端同步、AI OCR 或多人協作。第二版可加入手動欄位 mapping、多 sheet 選擇、Google Sheets、手機控制頁、完整通告表解析與選配的 Meta Display 純文字 HUD；是否加入 Supabase／AI 應再依現場需要評估。
+目前不解析 Excel 內嵌圖片，不支援登入、AI OCR 或多人協作。第二版可加入手動欄位 mapping、Google Sheets、手機控制頁、即時同步與 GlassKit 版本的眼鏡 UI；是否加入更完整的雲端後台，應再依現場需要評估。
